@@ -10,10 +10,19 @@
 // Write a function that calculates the price of an order of apples given
 // the quantity bought. No hints this time!
 
-// I AM NOT DONE
+const NORMAL_PRICE: usize = 2;
+const REDUCED_PRICE: usize = 1;
 
 // Put your function here!
-// fn calculate_price_of_apples {
+fn calculate_price_of_apples(n: usize) -> usize {
+    let price: usize;
+    if n <= 40 {
+        price = NORMAL_PRICE;
+    } else {
+        price = REDUCED_PRICE;
+    }
+    n * price
+}
 
 // Don't modify this function!
 #[test]

@@ -14,8 +14,6 @@
 
 // Execute `rustlings hint hashmaps3` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
-
 use std::collections::HashMap;
 
 // A structure to store team name and its goal details.
@@ -28,6 +26,8 @@ struct Team {
 fn build_scores_table(results: String) -> HashMap<String, Team> {
     // The name of the team is the key and its associated struct is the value.
     let mut scores: HashMap<String, Team> = HashMap::new();
+    let mut scored: HashMap<String, u8> = HashMap::new();
+    let mut conceded: HashMap<String, u8> = HashMap::new();
 
     for r in results.lines() {
         let v: Vec<&str> = r.split(',').collect();
@@ -40,6 +40,48 @@ fn build_scores_table(results: String) -> HashMap<String, Team> {
         // will be the number of goals conceded from team_2, and similarly
         // goals scored by team_2 will be the number of goals conceded by
         // team_1.
+        //match scored.get_mut(team_1_name) {
+        //Some(team_1_scored) => {}
+        //None =>
+        //}
+        scored
+            .entry(team_1_name.clone())
+            .and_modify(|s| *s += team_1_score)
+            .or_insert(team_1_score);
+        conceded
+            .entry(team_1_name.clone())
+            .and_modify(|c| *c += team_2_score)
+            .or_insert(team_2_score);
+        scored
+            .entry(team_2_name.clone())
+            .and_modify(|s| *s += team_2_score)
+            .or_insert(team_2_score);
+        conceded
+            .entry(team_2_name.clone())
+            .and_modify(|c| *c += team_1_score)
+            .or_insert(team_1_score);
+        //if let Some(old) = scored.insert(team_1_name.clone(), team_1_score)
+        //scored.insert(team_1_name.clone(), team_1_score + old);
+        //}
+        //if let Some(old) = conceded.insert(team_1_name.clone(), team_2_score) {
+        //conceded.insert(team_1_name.clone(), team_2_score + old);
+        //}
+        //if let Some(old) = scored.insert(team_2_name.clone(), team_2_score) {
+        //scored.insert(team_2_name.clone(), team_2_score + old);
+        //}
+        //if let Some(old) = conceded.insert(team_2_name.clone(), team_1_score) {
+        //conceded.insert(team_2_name.clone(), team_1_score + old);
+        //}
+    }
+    for (team, scored) in scored.iter() {
+        scores.insert(
+            team.clone(),
+            Team {
+                name: team.clone(),
+                goals_scored: *scored,
+                goals_conceded: *conceded.get(team).unwrap(),
+            },
+        );
     }
     scores
 }

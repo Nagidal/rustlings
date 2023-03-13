@@ -2,7 +2,9 @@
 // Make me compile, without taking the macro out of the module!
 // Execute `rustlings hint macros3` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
+// see https://stackoverflow.com/a/67140319/9235421
+
+use crate::macros::my_macro;
 
 mod macros {
     macro_rules! my_macro {
@@ -10,6 +12,7 @@ mod macros {
             println!("Check out my macro!");
         };
     }
+    pub(crate) use my_macro;
 }
 
 fn main() {
